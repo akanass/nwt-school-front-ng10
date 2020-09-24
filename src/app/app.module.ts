@@ -9,10 +9,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
+import { PersonComponent } from './person/person.component';
 
 
 @NgModule({
-  declarations: [ AppComponent, HomeComponent ],
+  declarations: [ AppComponent, HomeComponent, PersonComponent ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
