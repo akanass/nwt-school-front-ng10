@@ -9,6 +9,7 @@ const swagger_1 = require("@nestjs/swagger");
 const people_module_1 = require("./people/people.module");
 async function bootstrap(config, swaggerConfig) {
     const app = await core_1.NestFactory.create(app_module_1.AppModule, new platform_fastify_1.FastifyAdapter({ logger: true }));
+    app.enableCors({ origin: config.cors });
     app.useGlobalPipes(new common_1.ValidationPipe({
         whitelist: true,
         forbidNonWhitelisted: true,
