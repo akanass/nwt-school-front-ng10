@@ -16,7 +16,7 @@ import { HomeComponent } from './home/home.component';
     MatCardModule
   ],
   providers: [],
-  bootstrap: [ HomeComponent ]
+  bootstrap: [ AppComponent ]
 })
 export class AppModule {
 }
