@@ -4,17 +4,17 @@ import { PEOPLE } from '../_static/people';
 @Component({
   selector: 'nwt-person',
   templateUrl: './person.component.html',
-  styleUrls: ['./person.component.css']
+  styleUrls: [ './person.component.css' ]
 })
 export class PersonComponent implements OnInit {
   // private property to store person value
-  private readonly _person: any;
+  private _person: any;
 
   /**
    * Component constructor
    */
   constructor() {
-    this._person = PEOPLE[0];
+    this._person = PEOPLE[ 0 ];
   }
 
   /**
@@ -28,5 +28,12 @@ export class PersonComponent implements OnInit {
    * OnInit implementation
    */
   ngOnInit(): void {
+  }
+
+  /**
+   * Returns random people
+   */
+  random(): void {
+    this._person = PEOPLE[ Math.round(Math.random() * PEOPLE.length) ];
   }
 }
