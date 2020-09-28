@@ -2,7 +2,7 @@
   <mat-card-title-group>
     <img mat-card-md-image src="{{ person.photo }}">
     <mat-card-title>
-      <a href="javascript:void(0);">
+      <a [routerLink]="['/person', person.id]">
         <span>{{ person.firstname }} {{ person.lastname }}</span>
       </a>
     </mat-card-title>

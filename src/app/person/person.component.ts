@@ -11,11 +11,6 @@ import { filter, mergeMap, tap } from 'rxjs/operators';
   styleUrls: [ './person.component.css' ]
 })
 export class PersonComponent implements OnInit {
-  // private property to store person value
-  private _person: Person;
-  // private property to store flag to know if it's a person
-  private _isPerson: boolean;
-
   /**
    * Component constructor
    */
@@ -24,12 +19,18 @@ export class PersonComponent implements OnInit {
     this._isPerson = false;
   }
 
+  // private property to store person value
+  private _person: Person;
+
   /**
    * Returns private property _person
    */
   get person(): Person {
     return this._person;
   }
+
+  // private property to store flag to know if it's a person
+  private _isPerson: boolean;
 
   /**
    * Returns flag to know if we are on a profile or on HP
@@ -54,7 +55,14 @@ export class PersonComponent implements OnInit {
         tap(_ => this._isPerson = false)
       )
     )
-      .subscribe((person: any) => this._person = person);
+      .subscribe(
+        (person: any) => this._person = person,
+        () => {
+          // manage error when user doesn't exist in DB
+          this._person = this._peopleService.defaultPerson;
+          this._isPerson = true;
+        }
+      );
   }
 
   /**

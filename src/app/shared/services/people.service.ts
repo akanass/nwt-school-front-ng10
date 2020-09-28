@@ -20,6 +20,7 @@ export class PeopleService {
       firstname: 'firstname',
       lastname: 'lastname',
       entity: 'entity',
+      birthDate: 685317600000,
       email: 'email@ema.il',
       phone: '1234567890',
       address: {
@@ -39,6 +40,13 @@ export class PeopleService {
 
     // build all backend urls
     Object.keys(environment.backend.endpoints).forEach(k => this._backendURL[ k ] = `${baseUrl}${environment.backend.endpoints[ k ]}`);
+  }
+
+  /**
+   * Returns private property _defaultPerson
+   */
+  get defaultPerson(): Person {
+    return this._defaultPerson;
   }
 
   /**
