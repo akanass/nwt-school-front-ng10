@@ -22,6 +22,7 @@ import { FormComponent } from './shared/form/form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { UpdateComponent } from './update/update.component';
 import { NaPipe } from './shared/pipes/na.pipe';
+import { BadgeDirective } from './shared/directives/badge.directive';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { NaPipe } from './shared/pipes/na.pipe';
     DialogComponent,
     FormComponent,
     UpdateComponent,
-    NaPipe
+    NaPipe,
+    BadgeDirective
   ],
   imports: [
     BrowserModule,
