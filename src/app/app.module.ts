@@ -10,6 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { PersonComponent } from './person/person.component';
+import { AppRoutingModule } from './app-routing.module';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { PersonComponent } from './person/person.component';
     MatCardModule,
     MatButtonModule,
     MatListModule,
-    MatIconModule
+    MatIconModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [ AppComponent ]
