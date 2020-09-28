@@ -45,7 +45,8 @@ let PeopleService = class PeopleService {
     update(id, person) {
         return rxjs_1.from(this._people)
             .pipe(operators_1.find(_ => _.lastname.toLowerCase() === person.lastname.toLowerCase() &&
-            _.firstname.toLowerCase() === person.firstname.toLowerCase()), operators_1.mergeMap(_ => !!_ ?
+            _.firstname.toLowerCase() === person.firstname.toLowerCase() &&
+            _.id.toLowerCase() !== id.toLowerCase()), operators_1.mergeMap(_ => !!_ ?
             rxjs_1.throwError(new common_1.ConflictException(`People with lastname '${person.lastname}' and firstname '${person.firstname}' already exists`)) :
             this._findPeopleIndexOfList(id)), operators_1.tap(_ => Object.assign(this._people[_], person)), operators_1.map(_ => new person_entity_1.PersonEntity(this._people[_])));
     }

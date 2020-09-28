@@ -3,7 +3,7 @@ export interface Person {
     photo?: string;
     firstname: string;
     lastname: string;
-    entity?: string;
+    entity: string;
     birthDate?: number;
     email: string;
     phone: string;
