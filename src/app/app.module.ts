@@ -19,7 +19,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormComponent } from './shared/form/form.component';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { UpdateComponent } from './update/update.component';
 
 
@@ -38,7 +38,7 @@ import { UpdateComponent } from './update/update.component';
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    FormsModule,
+    ReactiveFormsModule,
     MatToolbarModule,
     MatCardModule,
     MatButtonModule,

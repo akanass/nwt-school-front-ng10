@@ -88,6 +88,7 @@ export class PeopleComponent implements OnInit {
         filter(_ => !!_),
         map((_: Person) => {
           // delete obsolete attributes in original object which are not required in the API
+          delete _.id;
           delete _.photo;
 
           return _;
