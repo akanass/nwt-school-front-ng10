@@ -20,6 +20,7 @@ export class PeopleService {
       firstname: 'firstname',
       lastname: 'lastname',
       entity: 'entity',
+      birthDate: 685317600000,
       email: 'email@ema.il',
       phone: '1234567890',
       address: {
