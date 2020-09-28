@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { defaultIfEmpty, filter } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { Person } from '../shared/interfaces/person';
 
@@ -43,6 +44,18 @@ export class PeopleComponent implements OnInit {
    */
   ngOnInit(): void {
     this._http.get(this._backendURL.allPeople)
+      .pipe(
+        filter(_ => !!_),
+        defaultIfEmpty([])
+      )
       .subscribe((people: Person[]) => this._people = people);
+  }
+
+  /**
+   * Function to delete one person
+   */
+  delete(person: Person): void {
+    this._http.delete(this._backendURL.onePeople.replace(':id', person.id))
+      .subscribe(_ => this._people = this._people.filter(__ => __.id !== person.id));
   }
 }

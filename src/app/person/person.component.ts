@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { defaultIfEmpty, filter } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { Person } from '../shared/interfaces/person';
 
@@ -28,7 +29,7 @@ export class PersonComponent implements OnInit {
     }
 
     // build all backend urls
-    Object.keys(environment.backend.endpoints).forEach(k => this._backendURL[k] = `${baseUrl}${environment.backend.endpoints[k]}`);
+    Object.keys(environment.backend.endpoints).forEach(k => this._backendURL[ k ] = `${baseUrl}${environment.backend.endpoints[ k ]}`);
   }
 
   /**
@@ -43,6 +44,10 @@ export class PersonComponent implements OnInit {
    */
   ngOnInit(): void {
     this._http.get(this._backendURL.allPeople)
+      .pipe(
+        filter(_ => !!_),
+        defaultIfEmpty([ {} ])
+      )
       .subscribe((people: Person[]) => this._person = people.shift());
   }
 
@@ -51,6 +56,10 @@ export class PersonComponent implements OnInit {
    */
   random(): void {
     this._http.get(this._backendURL.randomPeople)
+      .pipe(
+        filter(_ => !!_),
+        defaultIfEmpty({})
+      )
       .subscribe((person: Person) => this._person = person);
   }
 }
