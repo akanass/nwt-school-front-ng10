@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
-import { defaultIfEmpty, filter, mergeMap } from 'rxjs/operators';
+import { defaultIfEmpty, filter, map, mergeMap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { DialogComponent } from '../shared/dialog/dialog.component';
 import { Person } from '../shared/interfaces/person';
@@ -86,6 +86,12 @@ export class PeopleComponent implements OnInit {
     this._peopleDialog.afterClosed()
       .pipe(
         filter(_ => !!_),
+        map((_: Person) => {
+          // delete obsolete attributes in original object which are not required in the API
+          delete _.photo;
+
+          return _;
+        }),
         mergeMap(_ => this._add(_))
       )
       .subscribe(
