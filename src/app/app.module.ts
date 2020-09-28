@@ -18,14 +18,17 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormComponent } from './shared/form/form.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
-  declarations: [ AppComponent, HomeComponent, PersonComponent, PeopleComponent, CardComponent, DialogComponent ],
+  declarations: [ AppComponent, HomeComponent, PersonComponent, PeopleComponent, CardComponent, DialogComponent, FormComponent ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    FormsModule,
     MatToolbarModule,
     MatCardModule,
     MatButtonModule,

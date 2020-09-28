@@ -1,10 +1,11 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { defaultIfEmpty, filter } from 'rxjs/operators';
-import { environment } from '../../environments/environment';
-import { Person } from '../shared/interfaces/person';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { Observable } from 'rxjs';
+import { defaultIfEmpty, filter, mergeMap } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
 import { DialogComponent } from '../shared/dialog/dialog.component';
+import { Person } from '../shared/interfaces/person';
 
 @Component({
   selector: 'nwt-people',
@@ -57,12 +58,7 @@ export class PeopleComponent implements OnInit {
    * OnInit implementation
    */
   ngOnInit(): void {
-    this._http.get(this._backendURL.allPeople)
-      .pipe(
-        filter(_ => !!_),
-        defaultIfEmpty([])
-      )
-      .subscribe((people: Person[]) => this._people = people);
+    this._getAll().subscribe((people: Person[]) => this._people = people);
   }
 
   /**
@@ -82,10 +78,39 @@ export class PeopleComponent implements OnInit {
 
     // open modal
     this._peopleDialog = this._dialog.open(DialogComponent, {
-      width: '500px'
+      width: '500px',
+      disableClose: true
     });
 
     // subscribe to afterClosed observable to set dialog status and do process
-    this._peopleDialog.afterClosed().subscribe(_ => this._dialogStatus = 'inactive');
+    this._peopleDialog.afterClosed()
+      .pipe(
+        filter(_ => !!_),
+        mergeMap(_ => this._add(_))
+      )
+      .subscribe(
+        (people: Person[]) => this._people = people,
+        _ => this._dialogStatus = 'inactive',
+        () => this._dialogStatus = 'inactive'
+      );
+  }
+
+  /**
+   * Add new person and fetch all people to refresh the list
+   */
+  private _add(person: Person): Observable<Person[]> {
+    return this._http.post(this._backendURL.allPeople, person, { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) })
+      .pipe(mergeMap(_ => this._getAll()));
+  }
+
+  /**
+   * Returns Observable of all people
+   */
+  private _getAll(): Observable<Person[]> {
+    return this._http.get(this._backendURL.allPeople)
+      .pipe(
+        filter(_ => !!_),
+        defaultIfEmpty([])
+      );
   }
 }
