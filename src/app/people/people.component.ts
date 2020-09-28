@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { defaultIfEmpty, filter } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { Person } from '../shared/interfaces/person';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { DialogComponent } from '../shared/dialog/dialog.component';
 
 @Component({
   selector: 'nwt-people',
@@ -14,13 +16,18 @@ export class PeopleComponent implements OnInit {
   private _people: Person[];
   // private property to store all backend URLs
   private readonly _backendURL: any;
+  // private property to store dialogStatus value
+  private _dialogStatus: string;
+  // private property to store dialog reference
+  private _peopleDialog: MatDialogRef<DialogComponent>;
 
   /**
    * Component constructor
    */
-  constructor(private _http: HttpClient) {
+  constructor(private _http: HttpClient, private _dialog: MatDialog) {
     this._people = [];
     this._backendURL = {};
+    this._dialogStatus = 'inactive';
 
     // build backend base url
     let baseUrl = `${environment.backend.protocol}://${environment.backend.host}`;
@@ -37,6 +44,13 @@ export class PeopleComponent implements OnInit {
    */
   get people(): Person[] {
     return this._people;
+  }
+
+  /**
+   * Returns private property _dialogStatus
+   */
+  get dialogStatus(): string {
+    return this._dialogStatus;
   }
 
   /**
@@ -57,5 +71,21 @@ export class PeopleComponent implements OnInit {
   delete(person: Person): void {
     this._http.delete(this._backendURL.onePeople.replace(':id', person.id))
       .subscribe(_ => this._people = this._people.filter(__ => __.id !== person.id));
+  }
+
+  /**
+   * Function to display modal
+   */
+  showDialog(): void {
+    // set dialog status
+    this._dialogStatus = 'active';
+
+    // open modal
+    this._peopleDialog = this._dialog.open(DialogComponent, {
+      width: '500px'
+    });
+
+    // subscribe to afterClosed observable to set dialog status and do process
+    this._peopleDialog.afterClosed().subscribe(_ => this._dialogStatus = 'inactive');
   }
 }
