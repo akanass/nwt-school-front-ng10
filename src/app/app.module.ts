@@ -21,6 +21,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormComponent } from './shared/form/form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { UpdateComponent } from './update/update.component';
+import { NaPipe } from './shared/pipes/na.pipe';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { UpdateComponent } from './update/update.component';
     CardComponent,
     DialogComponent,
     FormComponent,
-    UpdateComponent
+    UpdateComponent,
+    NaPipe
   ],
   imports: [
     BrowserModule,
